@@ -92,9 +92,33 @@ def unified_search(image, start, goal, queue_type, heuristic=None):
     
     return reconstruct_path(prev, start, goal), visited
 
+# function: manhattan_distance
+# inputs:
+#   from_vertex: (x, y) tuple representing current pixel
+#   goal: (x, y) tuple representing goal pixel
+# output:
+#   distance: integer representing Manhattan distance between from_vertex and goal
+# relationships:
+#   used as heuristic in best_first_search
+#pseudocode:
+#   return abs(from_vertex[0] - goal[0]) + abs(from_vertex[1] - goal[1])
 def manhattan_distance(from_vertex, goal):
     return abs(from_vertex[0] - goal[0]) + abs(from_vertex[1] - goal[1])
 
+# function: get_neighbors
+# inputs:
+#   origin_vertex: (x, y) tuple representing current pixel
+#   image: 2D array of pixels
+# output:
+#   neighbors: list of (x, y) tuples representing valid neighboring pixels
+# relationships:
+#   used in unified_search to find adjacent pixels
+# pseudocode:
+#   for each direction in [up, down, left, right]:
+#       calculate new coordinates
+#       if new coordinates are in bounds and pixel values meet criteria:
+#           add to neighbors
+#   return neighbors
 def get_neighbors(origin_vertex, image):
     row, col = origin_vertex
     height = len(image)
@@ -117,6 +141,26 @@ def get_neighbors(origin_vertex, image):
     
     return neighbors
 
+# function: reconstruct_path
+# inputs:
+#   prev: dictionary mapping (x, y) tuples to their predecessor in the path
+#   start: (x, y) tuple representing starting pixel
+#   goal: (x, y) tuple representing goal pixel
+# output:
+#   path: list of (x, y) tuples representing path from start to goal
+# relationships:
+#   used in unified_search to build the final path
+# pseudocode:
+#   if goal not in prev and goal != start:
+#       return []
+#   initialize empty path list
+#   set current to goal
+#   while current != start:
+#       append current to path
+#       set current to prev[current]
+#   append start to path
+#   reverse path
+#   return path
 def reconstruct_path(prev, start, goal):
     # Check if goal was reached
     if goal not in prev and goal != start:
