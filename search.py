@@ -107,7 +107,7 @@ def get_neighbors(origin_vertex, image):
     for dr, dc in directions:
         new_row, new_col = row + dr, col + dc
         
-        # Check if n bounds
+        # Check if in bounds
         if 0 <= new_row < height and 0 <= new_col < width:
             # Check if pixel values are: 
             #          R > 100 or G > 100 or B > 100
@@ -127,8 +127,6 @@ def reconstruct_path(prev, start, goal):
     
     while current != start:
         path.append(current)
-        if current not in prev:
-            return []  # Path is not complete
         current = prev[current]
     
     # Add start to path
