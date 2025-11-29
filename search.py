@@ -18,6 +18,7 @@ from search_queue import FIFOQueue, PriorityQueue
 def breath_first_search(image, start, goal):
     return unified_search(image, start, goal, FIFOQueue)
 
+
 # function: best_first_search
 # inputs:
 #   image: 2D array of pixels
@@ -92,6 +93,7 @@ def unified_search(image, start, goal, queue_type, heuristic=None):
     
     return reconstruct_path(prev, start, goal), visited
 
+
 # function: manhattan_distance
 # inputs:
 #   from_vertex: (x, y) tuple representing current pixel
@@ -104,6 +106,7 @@ def unified_search(image, start, goal, queue_type, heuristic=None):
 #   return abs(from_vertex[0] - goal[0]) + abs(from_vertex[1] - goal[1])
 def manhattan_distance(from_vertex, goal):
     return abs(from_vertex[0] - goal[0]) + abs(from_vertex[1] - goal[1])
+
 
 # function: get_neighbors
 # inputs:
@@ -140,6 +143,7 @@ def get_neighbors(origin_vertex, image):
                 neighbors.append((new_row, new_col))
     
     return neighbors
+
 
 # function: reconstruct_path
 # inputs:
