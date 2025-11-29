@@ -4,18 +4,32 @@ from PIL import Image
 import numpy as np
 from search import *
 
+# function: create_image
+# inputs:
+#   path: list of (x, y) tuples representing path from start to goal
+#   visited: dictionary mapping (x, y) tuples to boolean indicating if pixel was visited
+#   image_array: original 2D array of pixels
+#   new_image: filename for the output image
+# output: none
+# relationships:
+#   creates and saves a new image highlighting visited pixels in green and path pixels in red
+# pseudocode:
+#   copy the original image array
+#   for each pixel in visited, set its color to green in the copied array
+#   for each pixel in path, set its color to red in the copied array
+#   create a new image from the modified array and save it
 def create_image(path, visited, image_array, new_image):
     modified_array = image_array.copy()
     for pixel in visited:
         x, y = pixel
-        modified_array[x][y][0] = 255
-        modified_array[x][y][1] = 0
+        modified_array[x][y][0] = 0
+        modified_array[x][y][1] = 255
         modified_array[x][y][2] = 0
 
     for pixel in path:
         x, y = pixel
-        modified_array[x][y][0] = 0
-        modified_array[x][y][1] = 255
+        modified_array[x][y][0] = 255
+        modified_array[x][y][1] = 0
         modified_array[x][y][2] = 0
 
     new_img = Image.fromarray(modified_array)
@@ -40,8 +54,8 @@ pixel_array = np.array(img)
 path_breadth, visited_breadth = breath_first_search(pixel_array, (s_r,s_c),(t_r,t_c))
 create_image(path_breadth, visited_breadth, pixel_array, breadth_img_path)
 
-path_best, visited_best = breath_first_search(pixel_array, (s_r,s_c),(t_r,t_c))
+path_best, visited_best = best_first_search(pixel_array, (s_r,s_c),(t_r,t_c))
 create_image(path_best, visited_best, pixel_array, best_img_path)
 
 # output results
-print("The shortest path from s to t has length", len(path_best))
+print("The shortest path from s to t has length", len(path_best) - 1)
